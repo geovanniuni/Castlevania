@@ -28,19 +28,6 @@ class GameState():
         self.score=score
 
 
-    #    def conditions(self,player, fpsLimit, candleGroup,platformGroup,  UI_Top, UI_HeartCount, UI_Time,runTime ,UI_Score, UI_TextGroup, score ):
-#        self.player = player
-#        self.fpsLimit = fpsLimit
-#        self.candleGroup= candleGroup
-#        self.platformGroup = platformGroup
-#        self.UI_Top = UI_Top
-#        self.UI_HeartCount = UI_HeartCount
-#        self.UI_Time = UI_Time
-#        self.runTime = runTime
-#        self.UI_Score = UI_Score
-#        self.UI_TextGroup = UI_TextGroup
-#        self.score=score
-
 
 
     def main_game(self, candleGroup , platformGroup):
@@ -95,6 +82,10 @@ class GameState():
         self.bird.update()
 
         #2 for
+
+        
+
+     #   self.player.attackBox.getHit()
         for x in self.candleGroup:
             pos = x.getPos()   #Array de las posisiones de candle
             rect = x.getRect()  #Array de las longitudes de rect a las imagnes

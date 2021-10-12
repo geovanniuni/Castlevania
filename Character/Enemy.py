@@ -1,4 +1,7 @@
-import pygame
+import pygame, random
+
+from Props.BigHeart import BigHeart
+from Props.SmallHeart import SmallHeart
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self,nameEnemy,nFrames,width,a0,a1=0,):
@@ -21,6 +24,10 @@ class Enemy(pygame.sprite.Sprite):
         self.win = pygame.display.get_surface() #Recibira como lienzo el pygame.display.set_mode del main
         self.frameArrayMov=self.loadFrames(nFrames,nameEnemy,width,a0,a1)
         self.wallCollision = [False, False]
+
+        self.state=True #Esta sin golpear
+        self.spawned = False #Si ha sido vencido
+        self.spawnedItem = 0 #Item que se genera si el enemigo es vencido
     
     def loadFrames(self,frames,name,width,a0,a1):
         array=[]
@@ -107,6 +114,37 @@ class Enemy(pygame.sprite.Sprite):
         elif axis == "y":
             self.moveSpeedY = amount #Establece la velocidad de movimiento en el eje y
 
+    def getPos(self): #Te da la pocicion del enemigo
+        array = [self.x, self.y]
+        return array
+
+    def getRect(self): #Te da el ancho y el largo del enemigo
+        array = [self.rect.width, self.rect.height]
+        return array
+
+    def getSpawnedItem(self):  #Retorna el item dado al vencer al enemigo
+        return self.spawnedItem     #al ser golpeado retorna esto
+
+    def getState(self):  #Te da el estado del enemigo
+        return self.state
+
+    def setActive(self, state):
+        self.state = state
+
+        if self.state == False and self.spawned == False:
+            self.spawnItem()
+            self.spawned = True
+
+    def spawnItem(self):        #genera el corazon , con asignacion random
+        rnd = random.randint(0,3)
+
+        if rnd == 0:
+            self.spawnedItem = BigHeart(self.x, self.y)
+
+        if rnd > 0:
+            self.spawnedItem = SmallHeart(self.x, self.y)
+
+
     def playAnim(self, anim):
         if anim == "idle":
             self.image = self.frameArrayMov[0]
@@ -131,30 +169,34 @@ class Enemy(pygame.sprite.Sprite):
 
 
     def update(self):
-        self.tempY = self.y
-        if self.moving:
-            self.move("x")
+        if self.state: #Sin golpear
+
+            self.tempY = self.y
+            if self.moving:
+                self.move("x")
+                
+                if self.attacking == False:
+                    self.playAnim("walk")
+                # if self.attacking:
+                #      self.playAnim("attack")
+            else:
+                if self.attacking == False:
+                    self.playAnim("idle")
+
+                # if self.attacking:
+                #     self.playAnim("attack")
+
+
+            # if self.getNumberOfCollisions() == 0:
+            #     self.setFloor(340)
+
             
-            if self.attacking == False:
-                self.playAnim("walk")
-            # if self.attacking:
-            #      self.playAnim("attack")
-        else:
-            if self.attacking == False:
-                self.playAnim("idle")
-
-            # if self.attacking:
-            #     self.playAnim("attack")
-
-
-        # if self.getNumberOfCollisions() == 0:
-        #     self.setFloor(340)
-
-        
-        self.win.blit(self.image, (self.x, self.y)) #Actualiza el sprint de acuerdo las condiciones
-        # self.collisionArray = []
-        # self.updateCollision()
-        # self.attackBox.update()
-        # self.passiveBox.update()
-        
-        #self.attackBox.getHit(self.x, self.y, self.rect.width, self.rect.height)
+            self.win.blit(self.image, (self.x, self.y)) #Actualiza el sprint de acuerdo las condiciones
+            # self.collisionArray = []
+            # self.updateCollision()
+            # self.attackBox.update()
+            # self.passiveBox.update()
+            
+            #self.attackBox.getHit(self.x, self.y, self.rect.width, self.rect.height)
+        elif self.spawned:  #golpeado y genera item
+            self.spawnedItem.update()  #Genera item  actualiza
