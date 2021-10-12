@@ -50,10 +50,12 @@ class Belmont(pygame.sprite.Sprite):
 
         self.hitBoxX = 40
         self.hitBoxY = 59
+        #valores para calibrar
         self.hitBoxOffsetX = [28, 88]
         self.hitBoxOffsetY = [1, 1]
 
         self.attackBox = AttackBox(self.x + 100, self.y + 11, 60, 27)
+        #posicion y tamaño en PassiveBox
         self.passiveBox = PassiveBox(self.x + self.hitBoxOffsetX[0], self.y + self.hitBoxOffsetY[0], self.hitBoxX, self.hitBoxY)
 
     def loadFrames(self, frames, name):

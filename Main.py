@@ -8,7 +8,7 @@ from Stage.Stage import Stage
 from UI.UI import UI_Image
 from UI.UI import UI_Text
 from GameR.GameState import GameState
-
+from Character.Enemy import Enemy
 
 pygame.init()
 fpsLimit = pygame.time.Clock()
@@ -24,6 +24,14 @@ bg = pygame.Color(0,0,0)
 
 player = Belmont()
 player.setPos(-10,244)
+
+squelet= Enemy("01",5,40,30,10)
+bird=Enemy("02",4,25,25)
+squelet.setMove(True)
+squelet.setPos(200,325)
+bird.setPos(200,250)
+squelet.setSpeed(1,'x')
+bird.setSpeed(2,"x")
 
 candle01_1 = Candle(84, 240)
 candle02_1 = Candle(157, 261)
@@ -86,7 +94,7 @@ while True:
 
     runTime = pygame.time.get_ticks()/1000
 
-    game_state = GameState(level, player, fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,
+    game_state = GameState(level, player,squelet ,bird, fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,
                            UI_Top, UI_HeartCount, UI_Time,runTime ,UI_Score, UI_TextGroup, score)
     #game_state_2=GameState()
 

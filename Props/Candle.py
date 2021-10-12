@@ -14,10 +14,10 @@ class Candle(pygame.sprite.Sprite):
         self.frameMod = 0
         self.frame = 0
         self.win = pygame.display.get_surface()
-        self.state = True
+        self.state = True                       # esta sin ser golpeado
         self.spawned = False
         self.rect = self.image.get_rect()
-        self.spawnedItem = 0
+        self.spawnedItem = 0      #invocacion cuando es golpeado
 
         self.frameArray = self.loadImages(2)
 
@@ -37,7 +37,7 @@ class Candle(pygame.sprite.Sprite):
         return array
 
     def getSpawnedItem(self):
-        return self.spawnedItem
+        return self.spawnedItem     #al ser golpeado retorna esto
 
     def getState(self):
         return self.state
@@ -49,7 +49,7 @@ class Candle(pygame.sprite.Sprite):
             self.spawnItem()
             self.spawned = True
 
-    def spawnItem(self):
+    def spawnItem(self):        #genera el corazon , con asignacion random
         rnd = random.randint(0,3)
 
         if rnd == 0:
@@ -71,8 +71,8 @@ class Candle(pygame.sprite.Sprite):
         self.image = self.frameArray[self.frame]
 
     def update(self):
-        if self.state:
+        if self.state:        #sin golpear
             self.playAnim()
             self.win.blit(self.image, (self.x, self.y))
-        elif self.spawned:
-            self.spawnedItem.update()
+        elif self.spawned:      #golpeado y genera corazon
+            self.spawnedItem.update()      #importante

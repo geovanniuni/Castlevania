@@ -9,9 +9,11 @@ from UI.UI import UI_Image
 from UI.UI import UI_Text
 
 class GameState():
-    def __init__(self, level, player, fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,  UI_Top, UI_HeartCount, UI_Time,runTime ,UI_Score, UI_TextGroup, score):
+    def __init__(self, level, player,squelet ,bird ,fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,  UI_Top, UI_HeartCount, UI_Time,runTime ,UI_Score, UI_TextGroup, score):
         self.level = level
         self.player = player
+        self.squelet= squelet
+        self.bird = bird
         self.fpsLimit = fpsLimit
         self.candleGroup_1= candleGroup_1
         self.platformGroup_1 = platformGroup_1
@@ -89,6 +91,8 @@ class GameState():
         self.fpsLimit.tick(30)
 
         self.player.update()
+        self.squelet.update()
+        self.bird.update()
 
         #2 for
         for x in self.candleGroup:
@@ -99,13 +103,15 @@ class GameState():
             #le enviamos la posicion de los candelabros, medidas del recuadro y el candelabro(ultimo?)
 
             self.player.attackBox.getHit(pos[0], pos[1], rect[0], rect[1], x)
-            #update de belmont
+            #update de candelabros -->animacion
             x.update()
 
-            if x.getState() == False:
-                item = x.getSpawnedItem()
-                iPos = item.getPos()
+            #NO SE COMPILA ESTO AL COMIENZO
+            if x.getState() == False:  #si es golpeado el candelabro
+                item = x.getSpawnedItem()    # se genera un item --retorna un 0?
+                iPos = item.getPos()         #Posicion e rect del item
                 iRect = item.getRect()
+
                 self.player.passiveBox.getHit(iPos[0], iPos[1], iRect[0], iRect[1], item)
 
                 if item.getState() == False and item.getPickedUpState() == False:
@@ -119,15 +125,20 @@ class GameState():
                         item.setFloor(jPos[1] + jRect[1] - iRect[1])
         #3 for
         for x in self.platformGroup:
+            #obtenemos informacion de los box
+            #en belmont invoca al metodo passive box ->obtener los valores de posicion nada mas [x,y]
             pos = self.player.passiveBox.getPos()
+
+            #Analiza si golpeo  a las plataformas---suelo?---> brinda y
             bottom = x.getHit(pos[0], pos[1], 40, 59)
             x.update()
 
+            #Si golpea algo , es true y entra al if
             if x.getCollision():
-                pPos = self.player.getPos()
+                pPos = self.player.getPos() #[x,y]
                 if pPos[1] <= bottom:
-                    self.player.setFloor(bottom)
-                    self.player.addCollision(x)
+                    self.player.setFloor(bottom)  #define el suelo con el valor de bottom
+                    self.player.addCollision(x)   #
 
         self.UI_Top.update()
 
