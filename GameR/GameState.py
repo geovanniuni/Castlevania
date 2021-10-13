@@ -9,11 +9,10 @@ from UI.UI import UI_Image
 from UI.UI import UI_Text
 
 class GameState():
-    def __init__(self, level, player,squelet ,bird ,fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,  UI_Top, UI_HeartCount, UI_Time,runTime ,UI_Score, UI_TextGroup, score):
+    def __init__(self, level, player,enemyGroup,fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,  UI_Top, UI_HeartCount, UI_Time,runTime ,UI_Score, UI_TextGroup, score):
         self.level = level
         self.player = player
-        self.squelet= squelet
-        self.bird = bird
+        self.enemyGroup= enemyGroup
         self.fpsLimit = fpsLimit
         self.candleGroup_1= candleGroup_1
         self.platformGroup_1 = platformGroup_1
@@ -77,9 +76,16 @@ class GameState():
 
         self.fpsLimit.tick(30)
 
+        for en in self.enemyGroup:
+            en.update()
+
+
+
         self.player.update()
-        self.squelet.update()
-        self.bird.update()
+        #self.squelet.update()
+        #self.bird.update()
+        #self.monkey.update()
+        #self.knight.update()
 
         #2 for
 
@@ -134,10 +140,16 @@ class GameState():
 
         self.UI_Top.update()
 
-        pos_enemy=self.squelet.getPos()
-        rect_enemy=self.squelet.getRect()
-        self.player.attackBox.getHit(pos_enemy[0], pos_enemy[1], rect_enemy[0], rect_enemy[1], self.squelet)
+        #pos_enemy=self.squelet.getPos()
+        #rect_enemy=self.squelet.getRect()
+        #self.player.attackBox.getHit(pos_enemy[0], pos_enemy[1], rect_enemy[0], rect_enemy[1], self.squelet)
+
         #self.player.update()
+
+        for en in self.enemyGroup:
+            pos_enemy=en.getPos()
+            rect_enemy=en.getRect()
+            self.player.attackBox.getHit(pos_enemy[0], pos_enemy[1], rect_enemy[0], rect_enemy[1], en)
 
         #4
         if self.player.getHeartCount() < 10:

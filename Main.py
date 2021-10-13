@@ -27,11 +27,29 @@ player.setPos(-10,244)
 
 squelet= Enemy("01",5,40,30,10)
 bird=Enemy("02",4,25,25)
+
+monkey=Enemy("03",4,40,30)
+knight=Enemy("04",2,30,25)
+owl=Enemy("05",3,60,40)
+
+
 squelet.setMove(True)
 squelet.setPos(200,325)
 bird.setPos(200,250)
+
+monkey.setPos(100,370)
+knight.setPos(250,350)
+owl.setPos(200,150)
+
+
+
 squelet.setSpeed(1,'x')
 bird.setSpeed(2,"x")
+
+knight.setSpeed(3,'x')
+owl.setSpeed(4,"x")
+
+enemyGroup=[squelet,bird,monkey,knight,owl]
 
 candle01_1 = Candle(84, 240)
 candle02_1 = Candle(157, 261)
@@ -94,7 +112,7 @@ while True:
 
     runTime = pygame.time.get_ticks()/1000
 
-    game_state = GameState(level, player,squelet ,bird, fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,
+    game_state = GameState(level, player,enemyGroup, fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,
                            UI_Top, UI_HeartCount, UI_Time,runTime ,UI_Score, UI_TextGroup, score)
     #game_state_2=GameState()
 
