@@ -32,6 +32,7 @@ squelet.setPos(200,325)
 bird.setPos(200,250)
 squelet.setSpeed(1,'x')
 bird.setSpeed(2,"x")
+bird.setLimits(20,300)
 
 candle01_1 = Candle(84, 240)
 candle02_1 = Candle(157, 261)
