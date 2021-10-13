@@ -46,11 +46,12 @@ owl.setPos(200,150)
 squelet.setSpeed(1,'x')
 bird.setSpeed(2,"x")
 
-knight.setSpeed(3,'x')
+knight.setSpeed(4,'x')
 knight.setLimits(100,400)
-owl.setSpeed(4,"x")
+owl.setSpeed(5,"x")
 
-enemyGroup=[squelet,bird,monkey,knight,owl]
+enemyGroup_1=[squelet,bird]
+enemyGroup_2=[monkey,knight,owl]
 
 candle01_1 = Candle(84, 240)
 candle02_1 = Candle(157, 261)
@@ -113,7 +114,7 @@ while True:
 
     runTime = pygame.time.get_ticks()/1000
 
-    game_state = GameState(level, player,enemyGroup, fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,
+    game_state = GameState(level, player,enemyGroup_1,enemyGroup_2, fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,
                            UI_Top, UI_HeartCount, UI_Time,runTime ,UI_Score, UI_TextGroup, score)
     #game_state_2=GameState()
 
@@ -122,11 +123,18 @@ while True:
         game_state.State_Manager()
 
         count = game_state.get_score()
+
         if count > 400:
             level="level_2"
             currentStage = Stage(0, 80, 5)
+            player.setPos(-10,244)
     else:
         game_state.State_Manager()
+
+    if level == "level_2":
+        count = game_state.get_score()
+
+
 
 
 

@@ -9,10 +9,11 @@ from UI.UI import UI_Image
 from UI.UI import UI_Text
 
 class GameState():
-    def __init__(self, level, player,enemyGroup,fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,  UI_Top, UI_HeartCount, UI_Time,runTime ,UI_Score, UI_TextGroup, score):
+    def __init__(self, level, player,enemyGroup_1,enemyGroup_2,fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,  UI_Top, UI_HeartCount, UI_Time,runTime ,UI_Score, UI_TextGroup, score):
         self.level = level
         self.player = player
-        self.enemyGroup= enemyGroup
+        self.enemyGroup_1= enemyGroup_1
+        self.enemyGroup_2= enemyGroup_2
         self.fpsLimit = fpsLimit
         self.candleGroup_1= candleGroup_1
         self.platformGroup_1 = platformGroup_1
@@ -26,10 +27,14 @@ class GameState():
         self.UI_TextGroup = UI_TextGroup
         self.score=score
 
+        self.win = pygame.display.get_surface()
+        self.bg = pygame.Color(0,0,0)
 
 
 
-    def main_game(self, candleGroup , platformGroup):
+
+    def main_game(self,enemyGroup, candleGroup , platformGroup):
+        self.enemyGroup = enemyGroup
         self.candleGroup = candleGroup
         self.platformGroup = platformGroup
 
@@ -146,6 +151,7 @@ class GameState():
 
         #self.player.update()
 
+
         for en in self.enemyGroup:
             pos_enemy=en.getPos()
             rect_enemy=en.getRect()
@@ -192,11 +198,17 @@ class GameState():
 
     def State_Manager(self):
         if self.level == "level_1":
-            self.main_game(self.candleGroup_1,self.platformGroup_1)
+            self.main_game(self.enemyGroup_1, self.candleGroup_1,self.platformGroup_1)
         if self.level == "level_2":
-            self.main_game(self.candleGroup_2,self.platformGroup_2)
+            self.main_game(self.enemyGroup_2, self.candleGroup_2,self.platformGroup_2)
+
+
 
     def get_score(self):
         return self.score
+
+
+
+
 
 
