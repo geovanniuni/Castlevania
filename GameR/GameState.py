@@ -85,7 +85,8 @@ class GameState():
 
         
 
-     #   self.player.attackBox.getHit()
+
+      
         for x in self.candleGroup:
             pos = x.getPos()   #Array de las posisiones de candle
             rect = x.getRect()  #Array de las longitudes de rect a las imagnes
@@ -132,6 +133,11 @@ class GameState():
                     self.player.addCollision(x)   #
 
         self.UI_Top.update()
+
+        pos_enemy=self.squelet.getPos()
+        rect_enemy=self.squelet.getRect()
+        self.player.attackBox.getHit(pos_enemy[0], pos_enemy[1], rect_enemy[0], rect_enemy[1], self.squelet)
+        #self.player.update()
 
         #4
         if self.player.getHeartCount() < 10:
