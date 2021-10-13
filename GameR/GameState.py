@@ -137,7 +137,50 @@ class GameState():
         pos_enemy=self.squelet.getPos()
         rect_enemy=self.squelet.getRect()
         self.player.attackBox.getHit(pos_enemy[0], pos_enemy[1], rect_enemy[0], rect_enemy[1], self.squelet)
+
+        if self.squelet.getState() == False:  #si es golpeado el candelabro
+                item = self.squelet.getSpawnedItem()    # se genera un item --retorna un 0?
+                iPos = item.getPos()         #Posicion e rect del item
+                iRect = item.getRect()
+
+                self.player.passiveBox.getHit(iPos[0], iPos[1], iRect[0], iRect[1], item)
+
+                if item.getState() == False and item.getPickedUpState() == False:
+                    item.pickUp()
+                    self.player.addHeartToCount(item.getHeartValue())
+
+                for y in self.platformGroup:
+                    jPos = y.getPos()
+                    jRect = y.getRect()
+                    if iPos[0] > jPos[0] and iPos[0] < (jPos[0] + jRect[0]):
+                        item.setFloor(jPos[1] + jRect[1] - iRect[1])
+
+
+
+
+        pos_enemy=self.bird.getPos()
+        rect_enemy=self.bird.getRect()
+        self.player.attackBox.getHit(pos_enemy[0], pos_enemy[1], rect_enemy[0], rect_enemy[1], self.bird)
         #self.player.update()
+
+
+        if self.bird.getState() == False:  #si es golpeado el candelabro
+                item = self.bird.getSpawnedItem()    # se genera un item --retorna un 0?
+                iPos = item.getPos()         #Posicion e rect del item
+                iRect = item.getRect()
+
+                self.player.passiveBox.getHit(iPos[0], iPos[1], iRect[0], iRect[1], item)
+
+                if item.getState() == False and item.getPickedUpState() == False:
+                    item.pickUp()
+                    self.player.addHeartToCount(item.getHeartValue())
+
+                for y in self.platformGroup:
+                    jPos = y.getPos()
+                    jRect = y.getRect()
+                    if iPos[0] > jPos[0] and iPos[0] < (jPos[0] + jRect[0]):
+                        item.setFloor(jPos[1] + jRect[1] - iRect[1])
+
 
         #4
         if self.player.getHeartCount() < 10:
