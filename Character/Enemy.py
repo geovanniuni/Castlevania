@@ -122,7 +122,7 @@ class Enemy(pygame.sprite.Sprite):
         return array
 
     def getRect(self): #Te da el ancho y el largo del enemigo
-        array = [self.rect.width, self.rect.height]
+        array = [self.rect.width/len(self.frameArrayMov), self.rect.height]
         return array
 
     def getSpawnedItem(self):  #Retorna el item dado al vencer al enemigo
