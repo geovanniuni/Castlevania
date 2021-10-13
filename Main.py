@@ -47,6 +47,7 @@ squelet.setSpeed(1,'x')
 bird.setSpeed(2,"x")
 
 knight.setSpeed(3,'x')
+knight.setLimits(10,400)
 owl.setSpeed(4,"x")
 
 enemyGroup=[squelet,bird,monkey,knight,owl]

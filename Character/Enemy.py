@@ -4,7 +4,7 @@ from Props.BigHeart import BigHeart
 from Props.SmallHeart import SmallHeart
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self,nameEnemy,nFrames,width,a0,a1=0,):
+    def __init__(self,nameEnemy,nFrames,width,a0,a1=0):
         self.frameArrayMov = []
         self.imgPath='Assets/Enemy/'
         self.imgName='enemy_'
@@ -24,7 +24,8 @@ class Enemy(pygame.sprite.Sprite):
         self.win = pygame.display.get_surface() #Recibira como lienzo el pygame.display.set_mode del main
         self.frameArrayMov=self.loadFrames(nFrames,nameEnemy,width,a0,a1)
         self.wallCollision = [False, False]
-
+        self.limit_left=-40
+        self.limit_right=514
         self.state=True #Esta sin golpear
         self.spawned = False #Si ha sido vencido
         self.spawnedItem = 0 #Item que se genera si el enemigo es vencido
@@ -79,23 +80,25 @@ class Enemy(pygame.sprite.Sprite):
         self.y = y
         self.tempX = x
         self.tempY = y
-    
+    def setLimits(self,x_left,x_right):
+        self.limit_left=x_left
+        self.limit_right=x_right
     def checkWall(self):
 
-        if self.x <= -40 :
+        if self.x <= self.limit_right:
             self.wallCollision[0] = True
         else:
             self.wallCollision[0] = False
 
 
-        if self.y > 244 and self.y <= 340:
+        # if self.y > 244 and self.y <= 340:
 
-            if self.x <= 36 :
-                self.wallCollision[0] = True
-            else:
-                self.wallCollision[0] = False
+        #     if self.x <= 36 :
+        #         self.wallCollision[0] = True
+        #     else:
+        #         self.wallCollision[0] = False
 
-        if self.x >= 514 :
+        if self.x >= self.limit_left :
             self.wallCollision[1] = True
         else:
             self.wallCollision[1] = False
