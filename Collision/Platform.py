@@ -43,5 +43,4 @@ class PlatformBox(PassiveBox):
 
     def update(self):
         pass
-        #if self.state:
-            #self.win.blit(self.surface, (self.x, self.y))
+

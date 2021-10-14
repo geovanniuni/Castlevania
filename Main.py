@@ -22,9 +22,11 @@ pygame.display.set_caption('Castlevania Gameplay')
 
 bg = pygame.Color(0,0,0)
 
+##------PERSONAJE PRINCIPAL ---------
 player = Belmont()
 player.setPos(-10,244)
 
+#--------ENEMIGOS----------
 squelet= Enemy("01",5,40,30,10)
 bird=Enemy("02",4,25,25)
 
@@ -53,6 +55,8 @@ owl.setSpeed(5,"x")
 enemyGroup_1=[squelet,bird]
 enemyGroup_2=[monkey,knight,owl]
 
+##---------NIVEL 1---------------------------
+
 candle01_1 = Candle(84, 240)
 candle02_1 = Candle(157, 261)
 candle03_1 = Candle(243, 244)
@@ -60,9 +64,8 @@ candle04_1 = Candle(372, 196)
 candle05_1 = Candle(502, 239)
 
 candleGroup_1 = [candle01_1, candle02_1, candle03_1, candle04_1, candle05_1]
-#itemGroup = []
 
-#ni idea
+
 currentStage = Stage(0, 80, 4)
 
 platform01_1 = PlatformBox(68, 340, 511, 60)
@@ -73,6 +76,8 @@ platform05_1 = PlatformBox(392, 276, 56, 60)
 
 platformGroup_1 = [platform01_1, platform02_1, platform03_1, platform04_1, platform05_1]
 
+
+#---------  NIVEL 2---------
 candle01_2 = Candle(70, 240)
 candle02_2 = Candle(100, 200)
 candle03_2 = Candle(200, 250)
@@ -92,6 +97,7 @@ platformGroup_2 = [platform01_2, platform02_2, platform03_2, platform04_2, platf
 score = 0
 count= 0
 
+#------ SCORE ------------
 UI_fontSize = 16
 
 UI_Top = UI_Image(0,0,'UI.png')
@@ -105,9 +111,6 @@ UI_TextGroup = [UI_Score, UI_Time, UI_HeartCount, UI_LifeCount]
 level="level_1"
 
 while True:
-    #windows --> la display
-    #fill ---> solid color ---> Me parece innecesario
-    #win.fill(bg)
 
 #Este update es del modulo stage -->
     currentStage.update()
@@ -116,8 +119,8 @@ while True:
 
     game_state = GameState(level, player,enemyGroup_1,enemyGroup_2, fpsLimit,candleGroup_1,platformGroup_1,candleGroup_2,platformGroup_2,
                            UI_Top, UI_HeartCount, UI_Time,runTime ,UI_Score, UI_TextGroup, score)
-    #game_state_2=GameState()
 
+#Escojemos a los niveles en base al score
 
     if level=="level_1":
         game_state.State_Manager()
@@ -134,11 +137,4 @@ while True:
     if level == "level_2":
         count = game_state.get_score()
 
-
-
-
-
-
-#display.update ---> part of it, without arguments all screen
-# display.flip ----> update all the screen
     pygame.display.update()

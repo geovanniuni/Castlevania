@@ -81,23 +81,10 @@ class GameState():
 
         self.fpsLimit.tick(30)
 
-        
-          
-
-
 
         self.player.update()
-        #self.squelet.update()
-        #self.bird.update()
-        #self.monkey.update()
-        #self.knight.update()
 
-        #2 for
-
-        
-
-
-      
+      # -----ACTUALIZACION DEL GRUPO DE CANDELABROS ------
         for x in self.candleGroup:
             pos = x.getPos()   #Array de las posisiones de candle
             rect = x.getRect()  #Array de las longitudes de rect a las imagnes
@@ -111,7 +98,7 @@ class GameState():
 
             #NO SE COMPILA ESTO AL COMIENZO
             if x.getState() == False:  #si es golpeado el candelabro
-                item = x.getSpawnedItem()    # se genera un item --retorna un 0?
+                item = x.getSpawnedItem()
                 iPos = item.getPos()         #Posicion e rect del item
                 iRect = item.getRect()
 
@@ -126,7 +113,8 @@ class GameState():
                     jRect = y.getRect()
                     if iPos[0] > jPos[0] and iPos[0] < (jPos[0] + jRect[0]):
                         item.setFloor(jPos[1] + jRect[1] - iRect[1])
-        #3 for
+
+      #-----ACTUALIZACION DE LAS PLATAFORMAS ---------
         for x in self.platformGroup:
             #obtenemos informacion de los box
             #en belmont invoca al metodo passive box ->obtener los valores de posicion nada mas [x,y]
@@ -145,21 +133,17 @@ class GameState():
 
         self.UI_Top.update()
 
-        #pos_enemy=self.squelet.getPos()
-        #rect_enemy=self.squelet.getRect()
-        #self.player.attackBox.getHit(pos_enemy[0], pos_enemy[1], rect_enemy[0], rect_enemy[1], self.squelet)
 
-        #self.player.update()
-
+    #-----ACTUALIZACION DE LOS ENEMIGOS ------
 
         for en in self.enemyGroup:
             pos_enemy=en.getPos()
             rect_enemy=en.getRect()
             self.player.attackBox.getHit(pos_enemy[0], pos_enemy[1], rect_enemy[0], rect_enemy[1], en)
             en.update()
-            if en.getState() == False:  #si es golpeado el candelabro
-                item = en.getSpawnedItem()    # se genera un item --retorna un 0?
-                iPos = item.getPos()         #Posicion e rect del item
+            if en.getState() == False:
+                item = en.getSpawnedItem()
+                iPos = item.getPos()
                 iRect = item.getRect()
 
                 self.player.passiveBox.getHit(iPos[0], iPos[1], iRect[0], iRect[1], item)
@@ -173,7 +157,8 @@ class GameState():
                     jRect = y.getRect()
                     if iPos[0] > jPos[0] and iPos[0] < (jPos[0] + jRect[0]):
                         item.setFloor(jPos[1] + jRect[1] - iRect[1])
-        #4
+
+        #----- CONTEO DE CORAZONES ------
         if self.player.getHeartCount() < 10:
             self.UI_HeartCount.setText("0" + str(self.player.getHeartCount()))
         else:
@@ -182,7 +167,8 @@ class GameState():
         self.UI_Time.setText("0" + str(999 - self.runTime))
 
         self.score = self.player.getHeartCount() * 75
-        #5
+
+        #-----BCD-------
         if self.score < 10:
             self.UI_Score.setText("00000" + str(self.score))
         elif self.score > 10 and self.score < 100:
@@ -192,16 +178,16 @@ class GameState():
         elif self.score > 1000:
             self.UI_Score.setText("00" + str(self.score))
 
-        #6
+        # UPDATE DEL SCORE
         for x in self.UI_TextGroup:
             x.update()
 
+# ESCOJE LAS VARIABLES CUANDO SE CAMBIA DE NIVEL------
     def State_Manager(self):
         if self.level == "level_1":
             self.main_game(self.enemyGroup_1, self.candleGroup_1,self.platformGroup_1)
         if self.level == "level_2":
             self.main_game(self.enemyGroup_2, self.candleGroup_2,self.platformGroup_2)
-
 
 
     def get_score(self):
