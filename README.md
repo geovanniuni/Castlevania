@@ -1,20 +1,16 @@
-# Castlevania Gameplay Recreation - Python
+# Castlevania - Python
 
-Castlevania Gameplay Recreation using PyGame. Small personal project.
+Proyecto para la practica 2 
+-Infante Burgos Geovanni Francesco
+-Vega Chachi Jamil Reynaldo
 
-Feel free to use or modify it in any way. If you find anything particularly useful just give credit.
+# Caracteristicas
+Dos niveles:
+* Nilvel 1 : 2 enemigos (llegar a 400 puntos y pasas al siguiente nivel) 
+* Nivel 2: 3 enemigos 
 
-All art assets were taken from the Castlevania game, property of Konami.
+# Controles
 
-# How to Run
-
-* Install Python 2.7
-* Install PyGame
-* Run Main.py
-
-# Usage
-
-Controls:
-* Move with the arrow keys
-* Z to attack
-* Space to jump
+* Las flechas del teclado sirven para mover
+* Z para atacar
+* Espacio para saltar
