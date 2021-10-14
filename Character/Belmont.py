@@ -6,57 +6,57 @@ from Collision.Passive import PassiveBox
 class Belmont(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.attacking = False
-        self.crouchFrame = pygame.image.load('Assets/Belmont/Belmont_Crouch.png')
-        self.crouching = False
-        self.currentFrame = 0
-        self.fallSpeed = 3
-        self.frameArrayWalk = []
-        self.frameArrayAttack = []
-        self.frameModulus = 0
-        self.gravity = 1
-        self.jumping = False
-        self.jumpAndMove = False
-        self.jumpForce = -12
-        self.jumpPush = -12
-        self.jumpFrame = pygame.image.load('Assets/Belmont/Belmont_Jump.png')
-        self.heartCount = 0
-        self.imageDir = True
-        self.imgPath = 'Assets/Belmont/'
-        self.imgName = 'Belmont_'
-        self.image = pygame.image.load('Assets/Belmont/Belmont_Walk_01.png')
-        self.image.convert_alpha()
-        self.keyDown = [False, False]
-        self.moving = False
-        self.moveDir = True
-        self.moveSpeed = 1
-        self.moveSpeedY = 0
-        self.offset = False
+        self.attacking = False #Verifica si esta atacando
+        self.crouchFrame = pygame.image.load('Assets/Belmont/Belmont_Crouch.png') #Carga el frame de belmont agachado
+        self.crouching = False #Define si belmont esta agachado
+        self.currentFrame = 0 #Especifica el current fram
+        self.fallSpeed = 3  #Define la Velocidad de caida
+        self.frameArrayWalk = [] #Array de Belmont Caminando
+        self.frameArrayAttack = [] #Array de Belmont atacando
+        self.frameModulus = 0 #Modulo del movimiento de Belmont
+        self.gravity = 1 #Define la gravedad del juego
+        self.jumping = False #Define si belmotn esta saltando
+        self.jumpAndMove = False #Define si belmont esta atacando y saltando a la vez
+        self.jumpForce = -12 #Define la fuerza del salto
+        self.jumpPush = -12 #Define la fuerza de caida
+        self.jumpFrame = pygame.image.load('Assets/Belmont/Belmont_Jump.png') #Carga el frame de belmont saltando
+        self.heartCount = 0 #Contador de corazones
+        self.imageDir = True #Define la direccion de movimiento del frame
+        self.imgPath = 'Assets/Belmont/' #Direccion de los frames de belmont
+        self.imgName = 'Belmont_' #El nombre del frame de Belmont
+        self.image = pygame.image.load('Assets/Belmont/Belmont_Walk_01.png') #Carga el frame actual de belmont
+        self.image.convert_alpha() 
+        self.keyDown = [False, False] #Define si se esta presionando una tecla izquierda o derecha
+        self.moving = False #Define si se esta moviendo Belmont
+        self.moveDir = True  #Define si belmont esta en movimiento en el eje x
+        self.moveSpeed = 1 #Velocidad de movimiento de Belmont
+        self.moveSpeedY = 0 #Velocidad de movimiento en el eje Y
+        self.offset = False #Offset entre las variabls temp y las pociciones actuales
         self.rect = self.image.get_rect()    #area de la imagen belmon_Walk_01
-        self.tempX = 0
-        self.tempY = 0
-        self.x = 0
-        self.y = 0
-        self.win = pygame.display.get_surface()
+        self.tempX = 0  #Variable temp en eje x
+        self.tempY = 0 #Variale temp en eje y
+        self.x = 0 #Pocicion actual en el eje x
+        self.y = 0 #Pocicion actual en el eje y
+        self.win = pygame.display.get_surface() #Define la superficio en la que se trabajara
 
-        self.floor = self.y
+        self.floor = self.y  #Define la pocicion del piso
 
-        self.collisionArray = []
-        self.wallCollision = [False, False]
+        self.collisionArray = []  #Los objetos de colicion
+        self.wallCollision = [False, False] #Si esta en los limites del movimiento permitido
 
-        self.frameArrayWalk = self.loadFrames(3, 'Walk_0')
-        self.frameArrayAttack = self.loadFrames(3, 'Attack_0')
-        self.frameArrayAttackCrouch = self.loadFrames(3, 'AttackCrouch_0')
+        self.frameArrayWalk = self.loadFrames(3, 'Walk_0') #Carga los arrays de Belmont caminando
+        self.frameArrayAttack = self.loadFrames(3, 'Attack_0') #Carga los array de Belmont atacando
+        self.frameArrayAttackCrouch = self.loadFrames(3, 'AttackCrouch_0') #Carga los array de Belmont atando agachado
 
-        self.hitBoxX = 40
-        self.hitBoxY = 59
+        self.hitBoxX = 40 #Define los rangoz en X para la colicion
+        self.hitBoxY = 59 #Define los rangos en Y para la colicion
         #valores para calibrar
-        self.hitBoxOffsetX = [28, 88]
-        self.hitBoxOffsetY = [1, 1]
+        self.hitBoxOffsetX = [28, 88] #Define los offsets en caso no se mueva o se mueva
+        self.hitBoxOffsetY = [1, 1] #Define los offsets en caso se mueva o no se mueva
 
-        self.attackBox = AttackBox(self.x + 100, self.y + 11, 60, 27)
+        self.attackBox = AttackBox(self.x + 100, self.y + 11, 60, 27) #Define el rango del ataque
         #posicion y tamaño en PassiveBox
-        self.passiveBox = PassiveBox(self.x + self.hitBoxOffsetX[0], self.y + self.hitBoxOffsetY[0], self.hitBoxX, self.hitBoxY)
+        self.passiveBox = PassiveBox(self.x + self.hitBoxOffsetX[0], self.y + self.hitBoxOffsetY[0], self.hitBoxX, self.hitBoxY) #Define el rango que ocupa belmont
 
     def loadFrames(self, frames, name):
         array = []
